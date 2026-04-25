@@ -72,6 +72,25 @@ Use the command from `Procfile`:
 uvicorn Frontend.app:app --host 0.0.0.0 --port $PORT
 ```
 
+## GitHub Pages (frontend hosting)
+
+GitHub Pages can only host **static** files, so the repo includes a static frontend in `docs/`.
+
+- Enable Pages: **Settings → Pages → Build and deployment → Source = Deploy from a branch**
+- Select branch **`main`** and folder **`/docs`**
+
+Your Pages URL will be:
+- `https://<your-username>.github.io/Fitro-Fyp/`
+
+### Make the Pages site “work”
+
+Because Pages cannot run Python, you must host the FastAPI backend separately (Render/Railway/VPS) and then set:
+
+- `docs/static/config.js` → `window.FITARO_API_BASE = "https://<your-backend-domain>"`.
+
+Also set backend CORS (optional but recommended):
+- `CORS_ORIGINS="https://<your-username>.github.io"`
+
 ## Project layout
 
 ```
