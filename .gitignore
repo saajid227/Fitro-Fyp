@@ -1,0 +1,27 @@
+.venv/
+venv/
+ENV/
+env/
+
+__pycache__/
+**/__pycache__/
+*.py[cod]
+*.pyd
+.Python
+
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+
+# Local-only build artifacts/logs
+*.log
+
+# If you ever download/expand new datasets locally
+dataset/*.zip

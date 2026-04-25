@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{{ title }} — Training</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+  </head>
+  <body>
+    <header class="header">
+      <div class="container">
+        <div class="brand">
+          <div class="brand-title">Fitaro</div>
+          <div class="brand-sub">Model training</div>
+        </div>
+        <div class="header-actions">
+          <a class="btn btn-secondary" href="/" rel="noreferrer">Back to recommender</a>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="card">
+        <h1 class="title">Train the model again</h1>
+        <p class="muted">
+          Click start to retrain. Logs will stream live below, then you’ll see the latest evaluation statistics.
+        </p>
+        <div class="actions">
+          <button id="startTrainBtn" class="btn btn-primary" type="button">Start training</button>
+          <span id="trainState" class="muted"></span>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2 class="result-title">Training log</h2>
+        <pre id="logBox" class="logbox"></pre>
+      </section>
+
+      <section id="statsCard" class="card hidden">
+        <h2 class="result-title">Latest evaluation statistics</h2>
+        <div class="stats-grid">
+          <div class="stat">
+            <div class="stat-k">Adjacent-size error rate</div>
+            <div id="adjStat" class="stat-v">—</div>
+          </div>
+          <div class="stat">
+            <div class="stat-k">Non-adjacent error rate</div>
+            <div id="nonAdjStat" class="stat-v">—</div>
+          </div>
+        </div>
+        <div class="divider"></div>
+        <div class="size-label">Full report</div>
+        <pre id="reportBox" class="justification"></pre>
+      </section>
+    </main>
+
+    <script src="/static/train.js"></script>
+  </body>
+</html>

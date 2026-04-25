@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{{ title }} — Model training</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+  </head>
+  <body>
+    <header class="header">
+      <div class="container">
+        <div class="brand">
+          <div class="brand-title">Fitaro</div>
+          <div class="brand-sub">Model training & reports</div>
+        </div>
+        <div class="header-actions">
+          <a class="btn btn-secondary" href="/" rel="noreferrer">Back to recommender</a>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="card">
+        <h1 class="title">Model training</h1>
+        <p class="muted">
+          This page shows the <b>currently used (latest)</b> trained model statistics and graphs from <code>outputs/plots/</code>.
+          Click <b>Train again</b> to retrain and automatically refresh everything after completion.
+        </p>
+        <div class="stats-grid" style="margin-top:14px">
+          <div class="stat">
+            <div class="stat-k">Trained date & time</div>
+            <div id="trainedAt" class="stat-v">—</div>
+          </div>
+          <div class="stat">
+            <div class="stat-k">Accuracy</div>
+            <div id="accStat" class="stat-v">—</div>
+          </div>
+          <div class="stat">
+            <div class="stat-k">Macro-F1</div>
+            <div id="f1Stat" class="stat-v">—</div>
+          </div>
+          <div class="stat">
+            <div class="stat-k">Adjacent-size error rate</div>
+            <div id="adjStat" class="stat-v">—</div>
+          </div>
+        </div>
+
+        <div class="actions" style="margin-top:12px">
+          <button id="trainAgainBtn" class="btn btn-primary" type="button">Train again</button>
+          <span id="trainState" class="muted"></span>
+        </div>
+      </section>
+
+      <section id="logCard" class="card hidden">
+        <h2 class="result-title">Training log</h2>
+        <pre id="logBox" class="logbox"></pre>
+      </section>
+
+      <section class="card">
+        <h2 class="result-title">Latest evaluation report</h2>
+        <pre id="reportBox" class="justification"></pre>
+      </section>
+
+      <section class="card">
+        <h2 class="result-title">Graphs & plots (outputs/plots)</h2>
+        <div id="plotsGrid" class="plots-grid"></div>
+      </section>
+    </main>
+
+    <script src="/static/model.js"></script>
+  </body>
+</html>

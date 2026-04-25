@@ -1,0 +1,15 @@
+{
+  "trained_at": "2026-04-25T10:34:28",
+  "model_latest_path": "E:\\fitaro\\outputs\\models\\fitaro_xgb_model.joblib",
+  "model_timestamped_path": "E:\\fitaro\\outputs\\models\\fitaro_xgb_model_20260425_103428.joblib",
+  "best_params": {
+    "subsample": 1.0,
+    "n_estimators": 200,
+    "min_child_weight": 5,
+    "max_depth": 5,
+    "learning_rate": 0.01,
+    "colsample_bytree": 0.7
+  },
+  "preprocessor_latest_path": "E:\\fitaro\\outputs\\models\\fitaro_preprocessor.joblib",
+  "preprocessor_timestamped_path": "E:\\fitaro\\outputs\\models\\fitaro_preprocessor_20260425_103428.joblib"
+}

@@ -1,0 +1,81 @@
+function $(id) {
+  return document.getElementById(id);
+}
+
+function show(el) {
+  el.classList.remove("hidden");
+}
+
+function hide(el) {
+  el.classList.add("hidden");
+}
+
+function toNumber(value) {
+  const n = Number(value);
+  return Number.isFinite(n) ? n : value;
+}
+
+function renderProbabilities(probabilities) {
+  const entries = Object.entries(probabilities || {});
+  entries.sort((a, b) => b[1] - a[1]);
+  return entries
+    .map(([size, prob]) => {
+      const pct = Math.round(prob * 1000) / 10;
+      const w = Math.max(2, Math.min(100, pct));
+      return `
+        <div class="prob-row">
+          <div class="prob-size">${size}</div>
+          <div class="prob-bar"><div class="prob-fill" style="width:${w}%"></div></div>
+          <div class="prob-pct">${pct}%</div>
+        </div>
+      `;
+    })
+    .join("");
+}
+
+async function predict(payload) {
+  const res = await fetch("/api/predict", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+  });
+  const data = await res.json();
+  if (!data.ok) throw new Error(data.error || "Prediction failed");
+  return data.result;
+}
+
+window.addEventListener("DOMContentLoaded", () => {
+  const form = $("predictForm");
+  const predictBtn = $("predictBtn");
+  const resultCard = $("resultCard");
+  const errorCard = $("errorCard");
+  const errorOut = $("errorOut");
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    hide(errorCard);
+    hide(resultCard);
+    predictBtn.disabled = true;
+    predictBtn.textContent = "Recommending...";
+
+    try {
+      const fd = new FormData(form);
+      const payload = {};
+      for (const [k, v] of fd.entries()) payload[k] = toNumber(v);
+
+      const result = await predict(payload);
+      $("sizeOut").textContent = result.size;
+      $("confidencePill").textContent = `Confidence: ${Math.round(result.confidence * 1000) / 10}%`;
+      $("probOut").innerHTML = renderProbabilities(result.probabilities);
+      $("justOut").textContent = result.justification || "";
+      show(resultCard);
+    } catch (err) {
+      errorOut.textContent = String(err?.message || err);
+      show(errorCard);
+    } finally {
+      predictBtn.disabled = false;
+      predictBtn.textContent = "Recommend me";
+    }
+  });
+});
+
