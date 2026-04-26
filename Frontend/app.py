@@ -108,28 +108,32 @@ def healthz() -> JSONResponse:
     return JSONResponse({"ok": True})
 
 
+def _render_static_template(filename: str, *, title: str) -> HTMLResponse:
+    """
+    Render very small Jinja-like templates without Jinja2.
+
+    Render deployments have occasionally hit Jinja2 template caching edge-cases; our
+    templates only use {{ title }}, so a safe string replacement is sufficient.
+    """
+    path = BASE_DIR / "templates" / filename
+    html = path.read_text(encoding="utf-8", errors="replace")
+    html = html.replace("{{ title }}", title)
+    return HTMLResponse(content=html)
+
+
 @app.api_route("/", methods=["GET", "HEAD"], response_class=HTMLResponse)
 def index(request: Request) -> HTMLResponse:
-    return templates.TemplateResponse(
-        "index.html",
-        {"request": request, "title": "Fitaro : AI Garment Size Recommender"},
-    )
+    return _render_static_template("index.html", title="Fitaro : AI Garment Size Recommender")
 
 
 @app.get("/model", response_class=HTMLResponse)
 def model_page(request: Request) -> HTMLResponse:
-    return templates.TemplateResponse(
-        "model.html",
-        {"request": request, "title": "Fitaro : AI Garment Size Recommender"},
-    )
+    return _render_static_template("model.html", title="Fitaro : AI Garment Size Recommender")
 
 
 @app.get("/train", response_class=HTMLResponse)
 def train_page(request: Request) -> HTMLResponse:
-    return templates.TemplateResponse(
-        "train.html",
-        {"request": request, "title": "Fitaro : AI Garment Size Recommender"},
-    )
+    return _render_static_template("train.html", title="Fitaro : AI Garment Size Recommender")
 
 
 @app.get("/api/model/info")
