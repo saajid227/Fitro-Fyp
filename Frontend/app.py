@@ -103,7 +103,12 @@ _jobs: Dict[str, _Job] = {}
 _jobs_lock = threading.Lock()
 
 
-@app.get("/", response_class=HTMLResponse)
+@app.get("/healthz")
+def healthz() -> JSONResponse:
+    return JSONResponse({"ok": True})
+
+
+@app.api_route("/", methods=["GET", "HEAD"], response_class=HTMLResponse)
 def index(request: Request) -> HTMLResponse:
     return templates.TemplateResponse(
         "index.html",

@@ -12,4 +12,5 @@ COPY . /app
 
 EXPOSE 8000
 
-CMD ["uvicorn", "Frontend.app:app", "--host", "0.0.0.0", "--port", "8000"]
+# Render (and other PaaS) provide the port via $PORT.
+CMD ["sh", "-c", "uvicorn Frontend.app:app --host 0.0.0.0 --port ${PORT:-8000}"]
