@@ -2,5 +2,5 @@
 // window.FITARO_API_BASE = "https://your-backend.onrender.com";
 //
 // If empty, the site will try same-origin (works only when served by FastAPI).
-window.FITARO_API_BASE = "";
+window.FITARO_API_BASE = "https://fitro-fyp.onrender.com";
 
