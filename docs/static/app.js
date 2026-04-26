@@ -45,8 +45,17 @@ async function predict(payload) {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(payload),
   });
+  const ct = (res.headers.get("content-type") || "").toLowerCase();
+  if (!ct.includes("application/json")) {
+    const text = await res.text();
+    const snippet = String(text || "").trim().slice(0, 200);
+    throw new Error(
+      `Backend did not return JSON (HTTP ${res.status}). Check window.FITARO_API_BASE. Response starts with: ${JSON.stringify(snippet)}`
+    );
+  }
+
   const data = await res.json();
-  if (!data.ok) throw new Error(data.error || "Prediction failed");
+  if (!res.ok || !data.ok) throw new Error(data?.error || `Prediction failed (HTTP ${res.status})`);
   return data.result;
 }
 
